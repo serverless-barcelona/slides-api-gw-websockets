@@ -30,27 +30,27 @@ module.exports = function(grunt) {
 			},
 			build: {
 				src: 'js/reveal.js',
-				dest: 'js/reveal.min.js'
+				dest: 'dist/reveal.min.js'
 			}
 		},
 
 		sass: {
 			core: {
 				src: 'css/reveal.scss',
-				dest: 'css/reveal.css'
+				dest: 'dist/css/reveal.css'
 			},
 			themes: {
 				expand: true,
 				cwd: 'css/theme/source',
 				src: ['*.sass', '*.scss'],
-				dest: 'css/theme',
+				dest: 'dist/css/theme',
 				ext: '.css'
 			}
 		},
 
 		autoprefixer: {
 			core: {
-				src: 'css/reveal.css'
+				src: 'dist/css/reveal.css'
 			}
 		},
 
@@ -59,8 +59,8 @@ module.exports = function(grunt) {
 				compatibility: 'ie9'
 			},
 			compress: {
-				src: 'css/reveal.css',
-				dest: 'css/reveal.min.css'
+				src: 'dist/css/reveal.css',
+				dest: 'dist/css/reveal.min.css'
 			}
 		},
 
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 					exports: false
 				}
 			},
-			files: [ 'Gruntfile.js', 'js/reveal.js' ]
+			files: [ 'Gruntfile.js', 'dist/js/reveal.js' ]
 		},
 
 		connect: {
@@ -107,8 +107,7 @@ module.exports = function(grunt) {
 			bundle: {
 				src: [
 					'index.html',
-					'css/**',
-					'js/**',
+					'dist/**',
 					'lib/**',
 					'images/**',
 					'plugin/**',
@@ -133,7 +132,7 @@ module.exports = function(grunt) {
 				tasks: 'css-themes'
 			},
 			css: {
-				files: [ 'css/reveal.scss' ],
+				files: [ 'css/**/*.scss' ],
 				tasks: 'css-core'
 			},
 			html: {
@@ -170,7 +169,7 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'default', [ 'css', 'js' ] );
 
 	// JS task
-	grunt.registerTask( 'js', [ 'jshint', 'uglify', 'qunit' ] );
+	grunt.registerTask( 'js', [ 'jshint', 'uglify' ] );
 
 	// Theme CSS
 	grunt.registerTask( 'css-themes', [ 'sass:themes' ] );

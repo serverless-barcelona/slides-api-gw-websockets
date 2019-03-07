@@ -7,11 +7,14 @@
 
 	<title>Serverless Meetup</title>
 
-	<link rel="stylesheet" href="css/reveal.css">
-	<link rel="stylesheet" href="css/theme/black.css">
+	<link rel="stylesheet" href="dist/css/reveal.css">
+	<link rel="stylesheet" href="dist/css/theme/black.css">
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Font awesome icons -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 	<!-- Printing and PDF exports -->
 	<script>
@@ -26,47 +29,70 @@
 <body>
 	<div class="reveal">
 		<div class="slides">
-			<section>
-				<h2>Websocket APIs</h2>
+			<section id="topic">
+				<h1>Serverless Websocket APIs</h1>
+			</section>
+			<section id="about-me">
+				<h4>About me:</h4>
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<p>Enric Soler Rastrollo</p>
+				<p><i class="fab fa-node-js" style="color:#55a532;"></i> & <i class="fab fa-aws" style="color:#ff9900;"></i> Developer</p>
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
 				<p>
-					<ul class="no-bullets">
-						<li>About me:</li>
-						<li>🙋‍♂️: Enric Soler Rastrollo (<a href="https://twitter.com/maddogos">@MaDDoGoS</a>)</li>
-						<li>⬡.js Developer</li>
-						<li>📧: <a href="mailto:contact@enricsoler.dev">contact(at)enricsoler.dev</a></li>
-						<li>https://www.linkedin.com/in/enricsolerrastrollo/</li>
-					</ul>
+					<small><a href="https://twitter.com/maddogos"><i class="fab fa-twitter"></i> @MaDDoGoS</a></small>
+					<small><a href="https://www.linkedin.com/in/enricsolerrastrollo/"><i class="fab fa-linkedin-in"></i> enricsolerrastrollo</a></small>
+					<small><a href="mailto:contact@enricsoler.dev"><i class="far fa-envelope"></i> contact(at)enricsoler.dev</a></small>
 				</p>
 			</section>
-			<section>
-				<h2>Traditional Websocket API</h2>
-				<p>1 (at least) server with autoscaling policies</p>
-				<p>1 load balancer to connect to instances</p>
-				<p>1 db to handle connections (i.e. Redis)</p>
+			<section id="what-is-ws">
+				<h2>What is a websocket?</h2>
+				<p>The Websocket protocol enables a 2-way communication between 2 ends (a client and a server) based on RFC-6455. Nowadays, all browers have natively support from websocket.</p>
+				<aside class="notes">https://tools.ietf.org/html/rfc6455</aside>
 			</section>
-			<section>
+			<section id="why-are-used">
+				<h2>Uses</h2>
+				<ul>
+					<p class="fragment"><img src="imgs/chat.svg" class="service-icon" alt=""></p>
+					<p class="fragment"><img src="imgs/controller.svg" class="service-icon" alt=""></p>
+					<p class="fragment"><img src="imgs/warning.svg" class="service-icon" alt=""></p>
+				</ul>
+			</section>
+			<section id="traditional-arquitecture">
 				<h2>Traditional example</h2>
-				<img src="imgs/api-gw-before.svg" alt="API GW Before" srcset="">
+				<img src="imgs/api-gw-before.svg" alt="Traditional arquitecture" srcset="">
+				<aside class="notes">
+					<h2>Traditional Websocket API</h2>
+					<p>1 (at least) server with autoscaling policies</p>
+					<p>1 load balancer to connect to instances</p>
+					<p>1 db to handle connections (i.e. Redis)</p>
+				</aside>
 			</section>
-			<section>
+			<section id="why-serverless">
 				<h2>Why serverless?</h2>
 				<p>
-					<img src="imgs/serverless.png" alt="Serverless" srcset="">
+					<img src="imgs/serverless-lambda-functions.png" alt="Serverless" srcset="" class="service-icon">
+					<img src="imgs/serverless-gcp-functions.png" alt="Serverless" srcset="" class="service-icon">
+					<img src="imgs/serverless-azure-functions.png" alt="Serverless" srcset="" class="service-icon">
 				</p>
-				<p class="fragment fade-up">1) Decreases costs</p>
-				<p class="fragment fade-up">2) Auto-scales without managing</p>
+				<ol>
+					<li class="fragment fade-up">Pay per use</li>
+					<li class="fragment fade-up">No administration</li>
+					<li class="fragment fade-up">Auto-scaling</li>
+					<li class="fragment fade-up">Increases development speed</li>
+				</ol>
 			</section>
 			<section data-background-image="imgs/tenor.gif"></section>
-			<section>
+			<section id="aws-api-gateway">
 				<h2>API Gateway</h2>
-				<img src="imgs/aws-api-gateway-icon.png" alt="" srcset="" style="height: 256px;">
-			</section>
-			<section>
-				<h2>What is API Gateway</h2>
+				<img src="imgs/aws-api-gateway-icon.png" alt="" srcset="" class="service-icon">
+				<h2>&nbsp;</h2>
 				<p>API Gateway allows you to create, maintain, and secure APIs at any scale</p>
-				<p>https://aws.amazon.com/api-gateway</p>
+				<aside class="notes">https://aws.amazon.com/api-gateway</aside>
 			</section>
-			<section>
+			<section id="why-use-api-gw">
 				<h2>Features</h2>
 				<ul>
 					<li>Easy creation of API (REST or Websokets)</li>
@@ -76,69 +102,83 @@
 					<li>Security</li>
 				</ul>
 			</section>
-			<section>
-				<h2>Implementation</h2>
-				<p>Route selection => Default: $request.body.action</p>
-				<ul>
-					<li>$connect</li>
-					<li>$disconnect</li>
-					<li>$default</li>
-				</ul>
-				<aside>
+			<section id="serverless-architecture">
+				<h2>Serverless example</h2>
+				<img src="imgs/api-gw-serverless.svg" alt="Serverless architecture" srcset="">
+				<aside class="notes">
+					<h2>Serverless Websocket API</h2>
+					<p>1 API Gateway</p>
+					<p>1 (or more lambda) to manage the messages that are sent to API GW</p>
+				</aside>
+			</section>
+			<section id="api-gw-v2-details">
+				<h2>API Gateway Details</h2>
+				<p>Route selection</p>
+				<pre><code>$request.body.action</code></pre>
+				<p>Assign Lambda to routes</p>
+				<pre><code data-trim data-noescape>
+					$connect
+					$disconnect
+					$default
+				</code></pre>
+				<aside class="notes">
 					https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-overview.html
 				</aside>
 			</section>
-			<section>
+			<section id="serverless-routes-example">
 				<h2>Example</h2>
-				<div class="multi-col">
-					<div class="col">
-						<pre>
-							<code data-trim data-noescape>
-								functions:
-									connectHandler:
-										handler: handler.connectHandler
-										events:
-										- websocket: $connect
-										- websocket: $disconnect
-							</code>
-						</pre>
-					</div>
-					<div class="col">
-						<div class="col">
-							<pre>
-								<code data-trim data-noescape>
-									functions:
-										messageHandler:
-											handler: handler.messageHandler
-											events:
-											- websocket: message
-								</code>
-							</pre>
-						</div>	
-					</div>
-				</div>
+				Route selection configuration
+				<pre><code data-trim data-noescape>
+					# Api Gateway Route Selection Expression
+					websocketsApiName: ${self:provider.stage}-${self:service}
+					websocketsApiRouteSelectionExpression: $request.body.action
+				</code></pre>
+				Lambdas configuration
+				<pre><code data-trim data-noescape>
+					# Lambda configuration
+					functions:
+						connectHandler:
+							handler: {handler.connectHandler | handler.messageHandler}
+							events:
+							- websocket: {$connect | $disconnect | message}
+				</code></pre>
 			</section>
-			<section>
+			<section id="serverless-messages-example">
 				<h2>Sending messages to clients...</h2>
-				<ul>
-					<li>
-						Storing connection ids (Dynamo, Redis)
-					</li>
-					<li>
-						Send to all
-					</li>
-				</ul>
-				<p>https://{api-id}.execute-api.us-east-1.amazonaws.com/{stage}/@connections/{connection_id}</p>
+				<pre><code data-trim data-noescape>
+					const { APIGatewayManagementAPI } = require('aws-sdk');
+					// ... Content removed for brevity
+					const { domainName, stage } = requestContext;
+					const apiGateway = new APIGatewayManagementAPI({
+						endpoint: `${domainName}/${stage}`,
+					});
+					/** 
+					 ** Send to all the users we want user connection IDs
+					 ** stored in Dynamo for example ;)
+					 **/
+					await apiGateway.postToConnection({
+						ConnectionId: connectionId,
+						Data: JSON.stringify({ action: 'message', /* ... */ }),
+					}).promise();
+				</code></pre>
+				<aside class="notes">https://{api-id}.execute-api.us-east-1.amazonaws.com/{stage}/@connections/{connection_id}</aside>
 			</section>
-			<section>
+			<section id="demo">
+				<h1>DEMO</h1>
+				<h1>&nbsp;</h1>
+				<a href="http://chat.serverless-barcelona.com">
+					<p id="qr-demo" style="margin-left: 36%"></p>
+				</a>
+			</section>
+			<section id="thanks-q-and-a">
 				<h1>Thank you for your attention</h1>
+				<p class="fragment">Q & A</p>
 			</section>
 		</div>
 	</div>
 
 	<script src="lib/js/head.min.js"></script>
-	<script src="js/reveal.js"></script>
-
+	<script src="dist/reveal.min.js"></script>
 	<script>
 		// More info about config & dependencies:
 		// - https://github.com/hakimel/reveal.js#configuration
@@ -149,8 +189,15 @@
 				{ src: 'plugin/markdown/marked.js' },
 				{ src: 'plugin/markdown/markdown.js' },
 				{ src: 'plugin/notes/notes.js', async: true },
-				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
-			]
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+				{ src: 'plugin/qrcode/jquery.min.js' },
+				{ src: 'plugin/qrcode/qrcode.min.js', callback: () => {
+					$(() => {
+						new QRCode(document.getElementById("qr-demo"), "http://chat.serverless-barcelona.com");
+					});
+				} }
+			],
+			mouseWheel: true
 		});
 	</script>
 </body>
